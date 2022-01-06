@@ -1,0 +1,82 @@
+<div class="container py-3">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Employee Managment</h2>
+        </div>
+        <div class="col ml-auto text-right">
+            <button type="button" class="btn btn-outline-success" (click)="onAddEmployee()">Add Employee</button>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-6">
+            <div class="input-group">
+                <div class="form-outline">
+                  <input id="search-input" type="search" id="form1" class="form-control" placeholder="search..."   [(ngModel)]="search" />
+                  
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-6 " style="text-align: right;">
+            <button class="btn btn-secondary" (click)="logout()">Logout</button>
+        </div>
+    </div>
+    
+      
+    <hr>
+
+    <div class="row">
+        <div class="col-md-4" *ngFor="let item of employees | filter:search ">
+            <div class="card mb-3" >
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{item.position}}</h6>
+                    
+                    <hr>
+                    <button type="button" class="btn btn-sm btn-outline-primary " (click)="onUpdateEmployee(item)">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger ml-2" (click)="onDeleteEmployee(item._id)">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- [class.show]='showModal'  fade -->
+<div class="modal fade show" [class.modal]="showModal">
+    <div class="modal-dialog modal-dialog-centered" role="document"  >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <!-- Add Employee -->
+                    {{editModal?'Update': 'Add'}} Employee
+                </h5>
+                <button type="button" class="close" (click)="onCloseModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="empForm" (ngSubmit)="onEmpSubmit()">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Name</label>
+                        <input type="text" class="form-control" formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Enter position</label>
+                        <input type="text" class="form-control" formControlName="position">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="onCloseModal()" class="btn btn-danger">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
